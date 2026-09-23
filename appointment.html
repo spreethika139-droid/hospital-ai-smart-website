@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Appointment</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f8fb;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1769aa;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #1769aa;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0d4f80;
+        }
+
+        .back {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back a {
+            color: #1769aa;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🏥 Book Appointment</h1>
+
+    <label>Hospital</label>
+    <input type="text" id="hospital" readonly>
+
+    <label>Patient Name</label>
+    <input type="text" placeholder="Enter patient name">
+
+    <label>Phone Number</label>
+    <input type="tel" placeholder="Enter phone number">
+
+    <label>Specialization</label>
+    <select>
+        <option>Cardiology</option>
+        <option>Neurology</option>
+        <option>Orthopedics</option>
+        <option>General Medicine</option>
+        <option>Emergency</option>
+    </select>
+
+    <label>Appointment Date</label>
+    <input type="date">
+
+    <label>Appointment Time</label>
+    <input type="time">
+
+    <button onclick="bookAppointment()">
+        Confirm Appointment
+    </button>
+
+    <div class="back">
+        <a href="index.html">← Back to Hospital Search</a>
+    </div>
+
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const hospital = params.get("hospital");
+
+if (hospital) {
+    document.getElementById("hospital").value = hospital;
+}
+
+function bookAppointment() {
+    alert("Appointment request submitted successfully!");
+}
+
+</script>
+
+</body>
+</html>
