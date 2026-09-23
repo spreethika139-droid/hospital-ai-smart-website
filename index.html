@@ -2,19 +2,12 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>AI Smart Hospital</title>
 
 <style>
-
-/* =========================
-   GENERAL
-========================= */
 
 * {
     box-sizing: border-box;
@@ -26,11 +19,6 @@ body {
     background: #f3f7fb;
     color: #222;
 }
-
-
-/* =========================
-   HEADER
-========================= */
 
 header {
     background: #1769aa;
@@ -48,39 +36,30 @@ header p {
     font-size: 17px;
 }
 
-
-/* =========================
-   CONTAINER
-========================= */
-
 .container {
     width: 92%;
     max-width: 1100px;
     margin: 30px auto;
 }
 
-
-/* =========================
-   LOCATION BOX
-========================= */
-
-.location-box {
+.location-box,
+.card,
+.hospital-card {
     background: white;
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 3px 10px #ccc;
-    text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
-.location-box h2 {
+.location-box {
+    text-align: center;
+}
+
+h2,
+.hospital-name {
     color: #1769aa;
 }
-
-
-/* =========================
-   BUTTON
-========================= */
 
 button {
     background: #1769aa;
@@ -101,36 +80,15 @@ button:hover {
     background: #159447;
 }
 
-.map-button:hover {
-    background: #0d7435;
-}
-
-
-/* =========================
-   LOCATION STATUS
-========================= */
-
 #locationStatus {
     margin-top: 15px;
     font-weight: bold;
 }
 
-
-/* =========================
-   HOSPITAL CARD
-========================= */
-
-.hospital-card {
-    background: white;
-    margin: 20px 0;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 3px 10px #ccc;
-}
-
-.hospital-name {
-    color: #1769aa;
-    font-size: 24px;
+.loading {
+    text-align: center;
+    padding: 30px;
+    font-size: 18px;
 }
 
 .distance {
@@ -142,20 +100,13 @@ button:hover {
     line-height: 1.9;
 }
 
-
-/* =========================
-   BED SECTION
-========================= */
+/* AI BED DETECTION */
 
 .bed-section {
     background: #eef7ff;
     padding: 18px;
     border-radius: 12px;
     margin-top: 20px;
-}
-
-.bed-section h3 {
-    color: #1769aa;
 }
 
 .bed-container {
@@ -192,10 +143,14 @@ button:hover {
     color: #159447;
 }
 
-
-/* =========================
-   AI STATUS
-========================= */
+.detection-image {
+    width: 100%;
+    max-width: 800px;
+    display: block;
+    margin: 20px auto;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+}
 
 .ai-status {
     background: #fff8e1;
@@ -205,22 +160,6 @@ button:hover {
     font-size: 14px;
 }
 
-
-/* =========================
-   LOADING
-========================= */
-
-.loading {
-    text-align: center;
-    padding: 30px;
-    font-size: 18px;
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
 footer {
     background: #1769aa;
     color: white;
@@ -228,11 +167,6 @@ footer {
     padding: 20px;
     margin-top: 40px;
 }
-
-
-/* =========================
-   MOBILE
-========================= */
 
 @media(max-width:600px) {
 
@@ -258,75 +192,153 @@ footer {
 <body>
 
 
-<!-- =========================
-     HEADER
-========================= -->
-
 <header>
 
-<h1>
-🏥 AI Smart Hospital
-</h1>
+<h1>🏥 AI Smart Hospital</h1>
 
 <p>
-AI-Based Hospital Bed Occupancy Detection
-&
+AI-Based Hospital Bed Occupancy Detection &
 Smart Hospital Recommendation
 </p>
 
 </header>
 
 
-
 <div class="container">
 
 
-<!-- =========================
-     LOCATION
-========================= -->
+<!-- LOCATION -->
 
 <div class="location-box">
 
-<h2>
-📍 Find Hospitals Near Me
-</h2>
+<h2>📍 Find Hospitals Near Me</h2>
 
 <p>
-Click the button below to find nearby hospitals.
+Use your location to find nearby hospitals.
 </p>
 
 <button onclick="getLocation()">
-
 📍 Use My Location
-
 </button>
 
-
 <div id="locationStatus">
-
 Location not detected
-
 </div>
 
 </div>
 
 
 
-<!-- =========================
-     HOSPITAL TITLE
-========================= -->
+<!-- AI BED DETECTION -->
 
-<h2 style="color:#1769aa;">
+<div class="card">
 
-🏥 Nearby Hospitals
-
+<h2>
+🤖 AI Bed Occupancy Detection
 </h2>
 
+<p>
+YOLO-based hospital bed detection result
+</p>
 
 
-<!-- =========================
-     HOSPITAL LIST
-========================= -->
+<img
+src="images/bed_detection_result.jpg"
+alt="YOLO Bed Detection Result"
+class="detection-image"
+onerror="this.style.display='none';document.getElementById('imageMessage').style.display='block';"
+>
+
+
+<p
+id="imageMessage"
+style="display:none;text-align:center;color:#777;"
+>
+
+📷 Upload
+<b>bed_detection_result.jpg</b>
+to the GitHub <b>images</b> folder.
+
+</p>
+
+
+<div class="bed-container">
+
+
+<div class="bed-box">
+
+<div>
+🛏️ Total Beds
+</div>
+
+<div
+class="bed-number total"
+id="totalBeds"
+>
+--
+</div>
+
+</div>
+
+
+<div class="bed-box">
+
+<div>
+🔴 Occupied Beds
+</div>
+
+<div
+class="bed-number occupied"
+id="occupiedBeds"
+>
+--
+</div>
+
+</div>
+
+
+<div class="bed-box">
+
+<div>
+🟢 Available Beds
+</div>
+
+<div
+class="bed-number available"
+id="availableBeds"
+>
+--
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="ai-status">
+
+🤖 <b>AI Analysis:</b>
+
+<br><br>
+
+The trained YOLO model detects
+beds and persons.
+
+A bed is considered occupied when
+a detected person is inside the bed region.
+
+</div>
+
+</div>
+
+
+
+<!-- NEARBY HOSPITALS -->
+
+<h2>
+🏥 Nearby Hospitals
+</h2>
 
 <div id="hospitalList">
 
@@ -344,10 +356,6 @@ to find nearby hospitals.
 </div>
 
 
-
-<!-- =========================
-     FOOTER
-========================= -->
 
 <footer>
 
@@ -367,14 +375,73 @@ Recommendation System
 <script>
 
 
-// ======================================================
-// GET USER LOCATION
-// ======================================================
+// ========================================
+// LOAD YOLO BED STATUS
+// ========================================
+
+async function loadBedStatus() {
+
+    try {
+
+        const response =
+            await fetch("bed_status.json");
+
+        if (!response.ok) {
+            throw new Error(
+                "Bed status file not found"
+            );
+        }
+
+        const data =
+            await response.json();
+
+
+        document.getElementById(
+            "totalBeds"
+        ).textContent =
+            data.total_beds;
+
+
+        document.getElementById(
+            "occupiedBeds"
+        ).textContent =
+            data.occupied_beds;
+
+
+        document.getElementById(
+            "availableBeds"
+        ).textContent =
+            data.available_beds;
+
+
+    }
+
+    catch(error) {
+
+        console.log(
+            "Bed status:",
+            error.message
+        );
+
+    }
+
+}
+
+
+loadBedStatus();
+
+
+
+// ========================================
+// GET LOCATION
+// ========================================
 
 function getLocation() {
 
     const status =
-        document.getElementById("locationStatus");
+        document.getElementById(
+            "locationStatus"
+        );
 
 
     status.innerHTML =
@@ -384,9 +451,12 @@ function getLocation() {
     if (!navigator.geolocation) {
 
         status.innerHTML =
-            "❌ Geolocation is not supported by this browser.";
+            "❌ Geolocation is not supported.";
+
+        displayFallbackHospitals();
 
         return;
+
     }
 
 
@@ -394,8 +464,10 @@ function getLocation() {
 
         function(position) {
 
+
             const latitude =
                 position.coords.latitude;
+
 
             const longitude =
                 position.coords.longitude;
@@ -410,29 +482,19 @@ function getLocation() {
                 longitude
             );
 
+
         },
 
 
         function(error) {
 
-            if (error.code === 1) {
 
-                status.innerHTML =
-                    "❌ Location permission denied. Please allow location access.";
+            status.innerHTML =
+                "❌ Location permission denied or unavailable.";
 
-            }
-
-            else {
-
-                status.innerHTML =
-                    "❌ Unable to detect location.";
-
-            }
-
-
-            // Show fallback hospitals
 
             displayFallbackHospitals();
+
 
         },
 
@@ -453,16 +515,20 @@ function getLocation() {
 
 
 
-// ======================================================
+// ========================================
 // FIND NEARBY HOSPITALS
-// OPENSTREETMAP OVERPASS API
-// ======================================================
+// ========================================
 
-async function findHospitals(lat, lon) {
+async function findHospitals(
+    lat,
+    lon
+) {
 
 
     const hospitalList =
-        document.getElementById("hospitalList");
+        document.getElementById(
+            "hospitalList"
+        );
 
 
     hospitalList.innerHTML = `
@@ -494,26 +560,27 @@ async function findHospitals(lat, lon) {
     try {
 
 
-        const response = await fetch(
+        const response =
+            await fetch(
 
-            "https://overpass-api.de/api/interpreter",
+                "https://overpass-api.de/api/interpreter",
 
-            {
+                {
 
-                method: "POST",
+                    method: "POST",
 
-                headers: {
+                    headers: {
 
-                    "Content-Type":
-                    "text/plain"
+                        "Content-Type":
+                        "text/plain"
 
-                },
+                    },
 
-                body: query
+                    body: query
 
-            }
+                }
 
-        );
+            );
 
 
         if (!response.ok) {
@@ -572,11 +639,9 @@ async function findHospitals(lat, lon) {
                     calculateDistance(
 
                         lat,
-
                         lon,
 
                         hospitalLat,
-
                         hospitalLon
 
                     );
@@ -608,13 +673,9 @@ async function findHospitals(lat, lon) {
         );
 
 
-        // ==========================================
-        // SORT BY DISTANCE
-        // ==========================================
-
         hospitals.sort(
 
-            function(a, b) {
+            function(a,b) {
 
                 return a.distance -
                        b.distance;
@@ -623,10 +684,6 @@ async function findHospitals(lat, lon) {
 
         );
 
-
-        // ==========================================
-        // REMOVE DUPLICATES
-        // ==========================================
 
         const uniqueHospitals = [];
 
@@ -657,10 +714,6 @@ async function findHospitals(lat, lon) {
 
         );
 
-
-        // ==========================================
-        // DISPLAY
-        // ==========================================
 
         if (
             uniqueHospitals.length > 0
@@ -704,9 +757,9 @@ async function findHospitals(lat, lon) {
 
 
 
-// ======================================================
-// DISTANCE CALCULATION
-// ======================================================
+// ========================================
+// DISTANCE
+// ========================================
 
 function calculateDistance(
 
@@ -775,9 +828,9 @@ function calculateDistance(
 
 
 
-// ======================================================
-// DISPLAY REAL NEARBY HOSPITALS
-// ======================================================
+// ========================================
+// DISPLAY HOSPITALS
+// ========================================
 
 function displayHospitals(
     hospitals
@@ -795,7 +848,7 @@ function displayHospitals(
 
     hospitals.forEach(
 
-        function(hospital, index) {
+        function(hospital) {
 
 
             const card =
@@ -837,41 +890,27 @@ function displayHospitals(
 
             <div class="details">
 
-
             📌 <b>Address:</b>
-
             ${hospital.address}
 
-
             <br>
-
 
             📞 <b>Phone:</b>
-
             ${hospital.phone}
-
 
             <br>
 
-
             🚑 <b>Emergency:</b>
-
             Hospital facility
-
 
             </div>
 
-
-
-            <!-- BED AVAILABILITY -->
 
             <div class="bed-section">
 
 
             <h3>
-
             🛏️ Bed Availability
-
             </h3>
 
 
@@ -881,84 +920,58 @@ function displayHospitals(
             <div class="bed-box">
 
             <div>
-
             🛏️ Total Beds
-
             </div>
-
 
             <div class="bed-number total">
-
             --
-
             </div>
 
             </div>
-
 
 
             <div class="bed-box">
 
             <div>
-
             🔴 Occupied Beds
-
             </div>
-
 
             <div class="bed-number occupied">
-
             --
-
             </div>
 
             </div>
-
 
 
             <div class="bed-box">
 
             <div>
-
             🟢 Available Beds
-
             </div>
-
 
             <div class="bed-number available">
-
             --
-
             </div>
 
             </div>
 
 
             </div>
-
 
 
             <div class="ai-status">
 
-
-            🤖 <b>AI Bed Detection</b>
-
+            🤖 <b>AI Bed Detection:</b>
 
             <br><br>
 
-
-            Live bed data requires
-
-            authorized hospital
-
-            CCTV/API connection.
-
+            Live hospital CCTV data requires
+            an authorized hospital connection.
 
             </div>
 
 
             </div>
-
 
 
             <br>
@@ -974,7 +987,6 @@ function displayHospitals(
             🗺️ View Location
 
             </button>
-
 
 
             <button
@@ -1003,9 +1015,9 @@ function displayHospitals(
 
 
 
-// ======================================================
+// ========================================
 // FALLBACK HOSPITALS
-// ======================================================
+// ========================================
 
 function displayFallbackHospitals() {
 
@@ -1025,10 +1037,10 @@ function displayFallbackHospitals() {
             "Hindu Mission Hospital",
 
             address:
-            "103, GST Road, Tambaram",
+            "Tambaram area",
 
             phone:
-            "044-22262244"
+            "Check hospital website"
 
         },
 
@@ -1039,10 +1051,10 @@ function displayFallbackHospitals() {
             "Tambaram Medical Center",
 
             address:
-            "East Tambaram, Chennai",
+            "Tambaram area",
 
             phone:
-            "Not available"
+            "Check hospital website"
 
         },
 
@@ -1053,10 +1065,10 @@ function displayFallbackHospitals() {
             "Annai Arul Hospital",
 
             address:
-            "Mudichur Road, Tambaram",
+            "Tambaram area",
 
             phone:
-            "Not available"
+            "Check hospital website"
 
         },
 
@@ -1067,10 +1079,10 @@ function displayFallbackHospitals() {
             "Deepam Hospitals",
 
             address:
-            "West Tambaram, Chennai",
+            "Tambaram area",
 
             phone:
-            "Not available"
+            "Check hospital website"
 
         },
 
@@ -1081,10 +1093,10 @@ function displayFallbackHospitals() {
             "Rela Hospital",
 
             address:
-            "Chromepet, Chennai",
+            "Chromepet area",
 
             phone:
-            "Not available"
+            "Check hospital website"
 
         }
 
@@ -1157,13 +1169,11 @@ function displayFallbackHospitals() {
             <div class="details">
 
             📌 <b>Address:</b>
-
             ${hospital.address}
 
             <br>
 
             📞 <b>Phone:</b>
-
             ${hospital.phone}
 
             </div>
@@ -1173,9 +1183,7 @@ function displayFallbackHospitals() {
 
 
             <h3>
-
             🛏️ Bed Availability
-
             </h3>
 
 
@@ -1185,15 +1193,11 @@ function displayFallbackHospitals() {
             <div class="bed-box">
 
             <div>
-
             🛏️ Total Beds
-
             </div>
 
             <div class="bed-number total">
-
             --
-
             </div>
 
             </div>
@@ -1202,15 +1206,11 @@ function displayFallbackHospitals() {
             <div class="bed-box">
 
             <div>
-
             🔴 Occupied
-
             </div>
 
             <div class="bed-number occupied">
-
             --
-
             </div>
 
             </div>
@@ -1219,15 +1219,11 @@ function displayFallbackHospitals() {
             <div class="bed-box">
 
             <div>
-
             🟢 Available
-
             </div>
 
             <div class="bed-number available">
-
             --
-
             </div>
 
             </div>
@@ -1240,8 +1236,8 @@ function displayFallbackHospitals() {
 
             🤖 <b>AI Bed Detection:</b>
 
-            Live bed information is not
-            connected yet.
+            Live hospital bed information
+            is not connected yet.
 
             </div>
 
@@ -1288,9 +1284,9 @@ function displayFallbackHospitals() {
 
 
 
-// ======================================================
+// ========================================
 // GOOGLE MAPS
-// ======================================================
+// ========================================
 
 function openMap(
     lat,
@@ -1315,11 +1311,6 @@ function openMap(
 }
 
 
-
-// ======================================================
-// GOOGLE MAPS FALLBACK SEARCH
-// ======================================================
-
 function searchGoogleMaps(
     hospital
 ) {
@@ -1341,9 +1332,9 @@ function searchGoogleMaps(
 
 
 
-// ======================================================
+// ========================================
 // APPOINTMENT
-// ======================================================
+// ========================================
 
 function bookAppointment(
     hospital
@@ -1360,9 +1351,7 @@ function bookAppointment(
 
 }
 
-
 </script>
-
 
 </body>
 
